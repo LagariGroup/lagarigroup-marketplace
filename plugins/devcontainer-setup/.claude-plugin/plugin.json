@@ -1,0 +1,13 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "devcontainer-setup",
+  "version": "0.1.0",
+  "description": "Set up Dev Containers in a project folder: detect the stack, apply an official template with the devcontainer CLI, add features, and validate",
+  "author": {
+    "name": "Jacques Murray",
+    "email": "jacquesmmurray@gmail.com"
+  },
+  "skills": [
+    "./"
+  ]
+}

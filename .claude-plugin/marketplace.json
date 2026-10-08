@@ -1,12 +1,17 @@
 {
   "name": "lagarigroup-marketplace",
-  "description": "Self-hosting and deployment tooling",
+  "description": "Lagari Group developer and self-hosting tooling",
   "owner": { "name": "Jacques Murray" },
   "plugins": [
     {
       "name": "selfhost-ops",
       "source": "./plugins/selfhost-ops",
       "description": "Compose review, pre-deploy checklist, VPS hardening audit, secrets-file guard"
+    },
+    {
+      "name": "devcontainer-setup",
+      "source": "./plugins/devcontainer-setup",
+      "description": "Set up and check Dev Containers in a project folder using official templates"
     }
   ]
 }
