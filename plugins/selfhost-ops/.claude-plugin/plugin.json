@@ -1,0 +1,13 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "selfhost-ops",
+  "version": "0.1.0",
+  "description": "Self-hosting and deployment guardrails: Docker Compose review, pre-deploy checklist, VPS hardening audit, and a secrets-file edit blocker",
+  "author": {
+    "name": "Jacques Murray",
+    "email": "jacquesmmurray@gmail.com"
+  },
+  "skills": [
+    "./"
+  ]
+}

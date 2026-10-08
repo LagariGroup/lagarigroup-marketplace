@@ -1,0 +1,12 @@
+{
+  "name": "lagarigroup-marketplace",
+  "description": "Self-hosting and deployment tooling",
+  "owner": { "name": "Jacques Murray" },
+  "plugins": [
+    {
+      "name": "selfhost-ops",
+      "source": "./plugins/selfhost-ops",
+      "description": "Compose review, pre-deploy checklist, VPS hardening audit, secrets-file guard"
+    }
+  ]
+}
