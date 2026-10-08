@@ -18,12 +18,12 @@ node scripts/detect-stack.js <project-folder>
 It is read-only and prints JSON: detected stacks, package manager, suggested ports, compose services, existing devcontainer files, and WSL warnings. Read the JSON before doing anything else, then:
 
 - **`existingDevcontainer` is not empty**: stop and ask whether to update it in place, replace it, or leave it alone. Never overwrite silently.
-- **`isWindowsMount` is true** (project under `/mnt/c/...` or another drive):
+- **`isWindowsMount` is true** (project under `/mnt/c/...` or another drive): warn that bind mounts on Windows drives are slow and break file watching and permissions. Recommend moving the project into the WSL filesystem (for example `~/projects`) before continuing, and ask whether to proceed anyway.
 - **Several stacks detected**: a devcontainer is one environment per folder. Ask which stack is primary (one question), use its template, and add the others as features.
 
 ## 2. Check tooling
 
-- `devcontainer --version`. If missing, use `npx -y @devcontainer/cli` in its place.
+- `devcontainer --version`. If missing, use `npx -y @devcontainers/cli` in its place.
 - `docker info`. Needed to build or start the container, not to generate files. If it fails, continue and say the build check will be skipped.
 - `git status --porcelain`. Applying a template can overwrite files. If the tree is dirty, ask the user to commit or stash first.
 

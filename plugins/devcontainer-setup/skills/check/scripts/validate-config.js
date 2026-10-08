@@ -72,7 +72,7 @@ function check(file) {
   const errors = [], warnings = [];
   let cfg;
   try {
-    cfg = JSON.parse(toStrictJson(fs.readFileSync(file, "utf8")));
+    cfg = JSON.parse(toStrictJson(fs.readFileSync(file, "utf8").replace(/^\uFEFF/, "")));
   } catch (e) {
     return { file, ok: false, errors: [`Syntax error: ${e.message}`], warnings };
   }

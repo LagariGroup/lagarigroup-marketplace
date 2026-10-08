@@ -9,7 +9,7 @@ Work through the steps in order. For each step, mark it PASS, FAIL, or UNKNOWN, 
 
 1. **Scope**: What is being deployed (service, image tag, config change)? State it in one sentence and confirm with the user if unclear.
 2. **Backup**: A backup of persistent data exists, is recent, and has been restorable. Ask for the backup time and the last restore test. A backup never restored counts as UNKNOWN.
-3. **Pinned version**: The new image tag or commit is exact and not `latest`. Run the compose-review skill's image checks on any changed compose file.
+3. **Pinned version**: The new image tag or commit is exact and not `latest`. Invoke the `compose-review` skill on any changed compose file and use its image pinning result.
 4. **Config diff**: Compare the new compose and env variable names against what is running. Only compare variable *names*, never values. Flag added, removed, or renamed variables.
 5. **Migrations**: Note any database migrations, whether they are reversible, and whether they run automatically on start.
 6. **Rollback**: A concrete rollback command exists in writing (previous image tag, `docker compose up -d` with the old file, or a restore step). If the migration is irreversible, say so.

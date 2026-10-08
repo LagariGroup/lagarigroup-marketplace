@@ -8,7 +8,7 @@ const path = require("path");
 
 const root = path.resolve(process.argv[2] || ".");
 const SKIP = new Set([
-  "node_modules", "vendor", "dist", "build", "target", "bin", "obj",
+  "node_modules", "vendor", "dist", "build", "target", "obj",
   "venv", "__pycache__", "coverage",
 ]);
 
@@ -57,7 +57,7 @@ function scanDir(abs, rel) {
     let pm = "npm";
     if (has("pnpm-lock.yaml")) pm = "pnpm";
     else if (has("yarn.lock")) pm = "yarn";
-    else if (has("bun.lockb") || has("bin.lock")) pm = "bun";
+    else if (has("bun.lockb") || has("bun.lock")) pm = "bun";
     else if (typeof pkg.packageManager === "string") pm = pkg.packageManager.split("@")[0];
     const typescript = Boolean(deps.typescript) || has("tsconfig.json");
     const nodeVersion =
@@ -113,7 +113,7 @@ function scanDir(abs, rel) {
     add("go", "go.mod", { goVersion: m ? m[1] : null });
   }
   if (has("pubspec.yaml")) {
-    const isFlutter = /^\s*flutter:/m.test(readText(here("pubspec.yal")));
+    const isFlutter = /^\s*flutter:/m.test(readText(here("pubspec.yaml")));
     add(isFlutter ? "flutter" : "dart", "pubspec.yaml");
   }
   const jvm = ["pom.xml", "build.gradle", "build.gradle.kts", "settings.gradle", "settings.gradle.kts"].filter(has);
@@ -164,7 +164,7 @@ if (fs.existsSync(dcDir)) {
 const report = {
   root,
   isWsl: Boolean(process.env.WSL_DISTRO_NAME),
-  isWindowsMount: /^\/mnt\/[a - z]\//i.test(root.replace(/\\/g, "/")),
+  isWindowsMount: /^\/mnt\/[a-z]\//i.test(root.replace(/\\/g, "/")),
   hasGit: fs.existsSync(path.join(root, ".git")),
   existingDevcontainer: existing,
   detected,

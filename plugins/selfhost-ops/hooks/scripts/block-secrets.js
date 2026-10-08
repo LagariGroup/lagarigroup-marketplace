@@ -17,11 +17,25 @@ function isSecretPath(p) {
   return SECRET_NAME.some((re) => re.test(name));
 }
 
-// Shell commands that write to a secrets file (redirects, tee, sed -i).
+// Shell commands that write to a secrets file (redirects, tee, sed -i, cp/mv/dd/install).
+// Each shell segment is checked on its own, so a safe template elsewhere in the
+// command does not disable the check.
+const SECRET_TOKEN = /(^|[\s"'=\/])(\.env(\.[\w-]+)?|[^\s"'|;&<>]*\.(pem|key|p12|pfx)|id_(rsa|ed25519|ecdsa))(?=[\s"']|$)/i;
+const WRITE_OP = />>?|\btee\b|\bsed\s+-\S*i|\b(cp|mv|dd|install|truncate|rm)\b/;
+
 function bashWritesSecret(cmd) {
-  const c = String(cmd || "");
-  return /(>>?|\btee\b(\s+-a)?|\bsed\s+-i\S*)\s+[^|;&\n]*\.env(\.[\w-]+)?(\s|$|["'])/i.test(c)
-    && !/\.env\.(example|sample|template|dist)/i.test(c);
+  return String(cmd || "")
+    .split(/&&|\|\||[;|\n]/)
+    .some((seg) => {
+      if (!WRITE_OP.test(seg)) return false;
+      const m = seg.match(new RegExp(SECRET_TOKEN.source, "gi")) || [];
+      return m.some((t) => !SAFE_SUFFIX.test(t.trim().replace(/["']+$/, "")));
+    });
+}
+
+if (require.main !== module) {
+  module.exports = { isSecretPath, bashWritesSecret };
+  return;
 }
 
 let raw = "";
@@ -42,7 +56,7 @@ process.stdin.on("end", () => {
   if (tool === "Bash") {
     blocked = bashWritesSecret(input.command);
   } else {
-    blocked = isSecretPath(input.file_path || input.path);
+    blocked = isSecretPath(input.file_path || input.notebook_path || input.path);
   }
 
   if (blocked) {
